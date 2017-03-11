@@ -37,14 +37,36 @@ class BookingAPI
         
         $hotel_id = BookingAPI::getHotelId($url);
         $data = null;
-
-        if ($hotel_id) {
-            
+        
+        if($hotel_id) {
+            $data = BookingAPI::getHotelData($hotel_id);
         }
         
         return [
             'hotel_id' => $hotel_id,
             'data' => $data
         ];
+    }
+
+    public static function getHotelData($hotel_id) {
+
+        $data = null;
+        $client = new Client(); // GuzzleHttp\Client
+
+        try {
+            // Make get request
+            $result = $client->get('https://distribution-xml.booking.com/json/bookings.getHotels?hotel_ids=' . $hotel_id, [
+                'auth' => [
+                    env('API_USERNAME'), 
+                    env('API_PASSWORD')
+                ]
+            ]);
+            $data = json_decode($result->getBody()->getContents());
+        }
+        catch( Exception $es) {
+            
+        }
+    
+        return $data;
     }
 }
