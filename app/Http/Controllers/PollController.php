@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\BookingAPI;
 use App\Poll;
 use App\Hotel;
+use Illuminate\Http\Response;
 
 class PollController extends Controller
 {
@@ -25,7 +26,8 @@ class PollController extends Controller
         }
  
         $poll->data = $asso_hotel;
-        return $poll;
+         return response($poll)
+                  ->header('Access-Control-Allow-Origin', '*');
     }
 
     public function postPoll() 
