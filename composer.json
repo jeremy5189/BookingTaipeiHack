@@ -9,10 +9,10 @@
     "laravel/lumen-framework": "5.4.*",
     "vlucas/phpdotenv": "~2.2",
     "guzzlehttp/guzzle": "^6.2",
-    "vluzrmos/tinker": "^1.3"
+    "vluzrmos/tinker": "^1.3",
+    "fzaninotto/faker": "^1.6"
   },
   "require-dev": {
-    "fzaninotto/faker": "~1.4",
     "phpunit/phpunit": "~5.0",
     "mockery/mockery": "~0.9"
   },
