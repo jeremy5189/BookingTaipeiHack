@@ -11,8 +11,19 @@
 |
 */
 
-$app->get('/', function () use ($app) {
+$app->get('/', function () use ($app) 
+{
     return $app->version();
 });
 
-$app->get('/getHotelByUrl', 'APIProxy@getHotelByUrl');
+// Booking API Proxy Endpoint
+$app->get('/getHotelByUrl',            'APIProxy@getHotelByUrl');
+$app->get('/getAvailabilityById',      'APIProxy@getAvailabilityById');
+
+// CURD API for poll
+$app->get('/poll/{id}',    'PollController@getPoll');
+$app->post('/poll',        'PollController@postPoll');
+$app->delete('/poll/{id}', 'PollController@deletePoll');
+
+// API for vote
+$app->post('/vote/{id}',   'VoteController@postVote');
