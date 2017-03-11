@@ -7,16 +7,17 @@ class Hotel extends Model {
 
     protected $fillable = [
         'id',
+        'booking_id',
         'checkIn',
         'checkOut',
         'location',
         'note',
-        'vote'
+        'poll_id'
     ];
 
     public function poll()
     {
-        return $this->belongsTo('App\Poll');
+        return $this->belongsTo('App\Poll', 'poll_id');
     }
 
     public function votes()

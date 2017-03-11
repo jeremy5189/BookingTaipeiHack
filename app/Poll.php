@@ -11,18 +11,17 @@ class Poll extends Model
         'startDate',
         'endDate',
         'personAmount',
-        'author',
-        'hotel'
+        'author'
     ];
     
     public function author()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User', 'author');
     }
 
     public function hotels()
     {
-        return $this->hasMany('App\Hotel', 'poll_id', 'id');
+        return $this->hasMany('App\Hotel', 'hotel', 'id');
     }
     
 }
