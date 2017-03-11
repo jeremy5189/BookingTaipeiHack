@@ -14,13 +14,13 @@ class CreateHotelsTable extends Migration
     public function up()
     {
         Schema::create('hotels', function (Blueprint $table) {
-            $table->string('id'); // Booking.com ID
+            $table->string('id'); 
+            $table->string('booking_id'); // Booking.com ID
             $table->date('checkIn');
             $table->date('checkOut');
             $table->string('location')->nullable();
             $table->string('note')->nullable();
-            $table->integer('vote');
-            //$table->foreign('vote')->references('id')->on('votes');
+            $table->string('poll_id');
             $table->timestamps();
         });
     }

@@ -20,9 +20,6 @@ class CreatePollsTable extends Migration
             $table->date('endDate')->nullable();
             $table->integer('personAmount');
             $table->integer('author');
-            //$table->foreign('author')->references('id')->on('users');
-            $table->string('hotel');
-            //$table->foreign('hotel')->references('id')->on('hotels');
             $table->timestamps();
         });
     }

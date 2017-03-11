@@ -8,7 +8,8 @@ class Vote extends Model {
         'author',
     ];
     
-    public function author(){
+    public function author()
+    {
         return $this->belongsTo('App\User');
     }
    

@@ -8,7 +8,7 @@ class PollController extends Controller
 {
     public function getPoll() 
     {
-
+        
     }
 
     public function postPoll() 

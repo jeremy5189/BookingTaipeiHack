@@ -2,8 +2,10 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Poll extends Model {
+class Poll extends Model 
+{
     protected $table = 'polls';
+
     protected $fillable = [
         'title',
         'startDate',
@@ -17,9 +19,10 @@ class Poll extends Model {
     {
         return $this->belongsTo('App\User');
     }
+
     public function hotels()
     {
-        return $this->hasMany('App\Hotel');
+        return $this->hasMany('App\Hotel', 'poll_id', 'id');
     }
     
 }

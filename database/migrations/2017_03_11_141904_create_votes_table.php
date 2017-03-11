@@ -17,7 +17,7 @@ class CreateVotesTable extends Migration
             $table->increments('id');
             $table->integer('reaction');
             $table->integer('author');
-            //$table->foreign('author')->references('id')->on('users');
+            $table->string('hotel_id');
             $table->timestamps();
         });
     }

@@ -2,7 +2,9 @@
 use Illuminate\Database\Eloquent\Model;
 
 class Hotel extends Model {
+
     protected $table = 'hotels';
+
     protected $fillable = [
         'id',
         'checkIn',
@@ -11,11 +13,14 @@ class Hotel extends Model {
         'note',
         'vote'
     ];
+
     public function poll()
     {
         return $this->belongsTo('App\Poll');
     }
-   public function votes(){
-       return $this->hasMany('App\Vote');
-   }
+
+    public function votes()
+    {
+        return $this->hasMany('App\Vote', 'hotel_id', 'id');
+    }
 }
