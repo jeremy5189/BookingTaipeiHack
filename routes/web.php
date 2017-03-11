@@ -15,4 +15,4 @@ $app->get('/', function () use ($app) {
     return $app->version();
 });
 
-$app->get('/getHotelByUrl/{url}', 'APIProxy@getHotelByUrl');
+$app->get('/getHotelByUrl', 'APIProxy@getHotelByUrl');

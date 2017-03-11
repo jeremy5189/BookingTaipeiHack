@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\BookingAPI;
+use Illuminate\Http\Request;
+
 
 class APIProxy extends Controller
 {
-    function getHotelByUrl($url) 
+    function getHotelByUrl(Request $request)
     {
-        return BookingAPI::getHotelIdByUrl($url);
+        return BookingAPI::getHotelByUrl($request->input('url'));
     }
 }
