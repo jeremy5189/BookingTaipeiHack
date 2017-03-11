@@ -3,7 +3,12 @@
 namespace App\Http;
 
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Pool;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Promise\EachPromise;
+use Psr\Http\Message\ResponseInterface;
+use Log;
 
 class BookingAPI 
 {
@@ -68,6 +73,43 @@ class BookingAPI
         }
     
         return $data;
+    }
+
+    public static function getHotelDataAsync($hotel_id_arr) 
+    {
+        $client = new Client();
+        $ret = [];
+
+        $promise = BookingAPI::reqPromise($client, $hotel_id_arr);
+
+        $pool = (new EachPromise($promise, [
+            'concurrency' => 5,
+            'fulfilled' => function ($response) use (&$ret){
+                Log::debug('fullfiled: ');
+                //Log::debug($response);
+                $ret[$response[0]->hotel_id] = $response[0];
+            }
+        ]))->promise()->wait();
+
+        return $ret;
+    }
+
+    private static function reqPromise($client, $hotel_id_arr){
+        $url = 'https://distribution-xml.booking.com/json/bookings.getHotels?hotel_ids=';
+        foreach ( $hotel_id_arr as $hotel_id ) {
+            Log::debug($hotel_id);
+            $uu = $url . $hotel_id;        
+            Log::debug('hotel_id= '. $uu);
+            yield $client->requestAsync('GET', $uu, [
+                'auth' => [
+                    env('API_USERNAME'), 
+                    env('API_PASSWORD')
+                ]
+            ])->then(function(ResponseInterface $response) {
+                Log::debug('then');
+                return json_decode($response->getBody());
+            });
+        }
     }
 
     public static function getAvailability($checkIn, $checkOut, $hotels_id, $personAmount) 
