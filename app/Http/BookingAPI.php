@@ -85,13 +85,15 @@ class BookingAPI
 
         $pool = (new EachPromise($promise, [
             'concurrency' => 5,
-            'fulfilled' => function ($response) use (&$ret){
-                Log::debug('fullfiled: ');
-                //Log::debug($response);
-                $ret[$response[0]->hotel_id] = $response[0];
+            'fulfilled' => function ($response) use (&$ret){      
+                if(isset($response[0])){
+                     $ret[$response[0]->hotel_id] = $response[0];
+                }      
+               
+                
             }
         ]))->promise()->wait();
-
+    
         return $ret;
     }
 

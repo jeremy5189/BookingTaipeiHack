@@ -22,7 +22,7 @@ class VoteController extends Controller
             "note"      => $allReq["note"]
         ]);
         
-        return response("success");      
+        return response("vote created", 200);      
         
     }
 }
