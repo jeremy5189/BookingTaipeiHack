@@ -23,6 +23,7 @@ $app->get('/getAvailabilityById',      'APIProxy@getAvailabilityById');
 // CURD API for poll
 $app->get('/poll/{id}',    'PollController@getPoll');
 $app->post('/poll',        'PollController@postPoll');
+
 $app->delete('/poll/{id}', 'PollController@deletePoll');
 
 // API for vote
