@@ -13,7 +13,8 @@ class User extends Model
         'email',
     ];
     
-    public function polls() {
+    public function polls() 
+    {
         return $this->hasMany('App\Poll', 'author', 'id');
     }
    

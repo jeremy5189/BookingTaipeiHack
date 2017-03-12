@@ -98,7 +98,8 @@ class BookingAPI
     }
 
     // Promise function 
-    private static function reqPromise($client, $hotel_id_arr){
+    private static function reqPromise($client, $hotel_id_arr)
+    {
         $url = 'https://distribution-xml.booking.com/json/bookings.getHotels?hotel_ids=';
 
         foreach ( $hotel_id_arr as $hotel_id ) {
