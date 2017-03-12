@@ -11,12 +11,11 @@ class VoteController extends Controller
     public function postVote(Request $request){
 
         $allReq = $request->all();
-        $user = User::Create(["name" => $allReq["name"]]);
+        $user = User::Create(["name" => $allReq["name"]]);       
         
-        $voteReq = $request->only("name", "reaction", "hotel_id", "note");
-          
+        
         $vote = Vote::Create([
-            "name"      => $allReq["name"], 
+            "name"    => $allReq["name"], 
             "reaction"  => $allReq["reaction"], 
             "hotel_id"  => $allReq["hotel_id"],
             "note"      => $allReq["note"]
@@ -25,7 +24,7 @@ class VoteController extends Controller
         return response("vote created", 200);      
         
     }
-    public function getVote($id){
+    public function getVoteByHotelId($id){
         return response(DB::table('votes')->where('hotel_id', '=', $id)->get());
 
     }

@@ -27,6 +27,7 @@ class PollController extends Controller
         foreach($asso_hotel as $hotel) {
             $hotel->hotelData = $hotel_data[$hotel->booking_id];
             $hotel->vote = DB::table('votes')->where('hotel_id', '=', $hotel->id)->get();
+
         }
 
          $poll->data = $asso_hotel;

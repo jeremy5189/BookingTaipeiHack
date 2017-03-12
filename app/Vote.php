@@ -4,6 +4,8 @@ class Vote extends Model {
     protected $table = 'votes';
     
     protected $fillable = [
+        'name',
+        'hotel_id',
         'reaction',
         'note',
         'author',
