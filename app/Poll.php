@@ -7,6 +7,7 @@ class Poll extends Model
     protected $table = 'polls';
 
     protected $fillable = [
+        'id',
         'title',
         'startDate',
         'endDate',
