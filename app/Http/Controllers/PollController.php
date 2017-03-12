@@ -20,11 +20,11 @@ class PollController extends Controller
         }
 
         $hotel_data = BookingAPI::getHotelDataAsync($hotel_id_arr);
-
+        
         foreach($asso_hotel as $hotel) {
             $hotel->hotelData = $hotel_data[$hotel->booking_id];
         }
- 
+        
         $poll->data = $asso_hotel;
          return response($poll)
                   ->header('Access-Control-Allow-Origin', '*');

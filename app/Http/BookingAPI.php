@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Promise\EachPromise;
 use Psr\Http\Message\ResponseInterface;
 use Log;
+use Illuminate\Http\Response;
 
 class BookingAPI 
 {
@@ -47,10 +48,10 @@ class BookingAPI
             $data = BookingAPI::getHotelData($hotel_id);
         }
         
-        return [
+        return response([
             'hotel_id' => $hotel_id,
             'data' => $data
-        ];
+        ], 200)->header('Access-Control-Allow-Origin', '*');;
     }
 
     public static function getHotelData($hotel_id) 
