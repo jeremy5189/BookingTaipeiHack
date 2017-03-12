@@ -14,7 +14,7 @@ class PollController extends Controller
 {
     public function getPoll($id) 
     {
-        
+
         $poll = Poll::where('id', $id)->with('author')->first();
 
         $asso_hotel =  DB::table('hotels')->where('poll_id', '=', $poll->id)->get();
@@ -41,20 +41,29 @@ class PollController extends Controller
 
     public function postPoll(Request $request) 
     {        
-      
+        $json = $request->all();
+        $request = json_decode($json['json'], true);
+        
         //create user
-        $authorReq = $request->input('author');
-        $user = User::firstOrCreate($authorReq[0]);
+        $authorReq = $request["author"];
        
+        $user = User::firstOrCreate($authorReq[0]);
+        $pollReq = array();
         //create poll
-        $pollReq = $request->only(['title', 'startDate','endDate','personAmount']);
+        $pollReq['title']       = $request["title"];
+        $pollReq['startDate']   = $request["startDate"];
+        $pollReq['endDate']     = $request["endDate"];
+        $pollReq['personAmount']= $request["personAmount"];
+
+        
         $pollReq['id'] = sha1(time());
         $pollReq['author'] = $user->id;      
         $poll = Poll::Create($pollReq);
         
         //create hotel
-        $hotelReq = $request->input('hotels');
-        foreach ($hotelReq as $key => $value) {
+        $hotelReq = $request["hotels"];
+       
+        foreach ($hotelReq as $key => $value) {          
             $value['poll_id'] = $pollReq['id'];   
             $value['id'] = sha1(time()+$key);         
             $hotel = Hotel::Create($value);
