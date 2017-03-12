@@ -56,7 +56,7 @@ class PollController extends Controller
             $hotel = Hotel::Create($value);
         }
        
-        return response(array("poll id" => $pollReq['id']), 200);
+        return response(array("poll id" => $pollReq['id']), 200)->header('Access-Control-Allow-Origin', '*');
     }
 
     public function deletePoll() 
