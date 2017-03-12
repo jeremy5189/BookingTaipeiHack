@@ -15,13 +15,15 @@ class PollController extends Controller
     public function getPoll($id) 
     {
         $poll = Poll::where('id', $id)->with('author')->first();
+
         $asso_hotel =  DB::table('hotels')->where('poll_id', '=', $poll->id)->get();
        
         $hotel_id_arr = [];
         foreach($asso_hotel as $hotel) {           
             $hotel_id_arr[] = $hotel->booking_id;
         }
-        
+      
+
         $hotel_data = BookingAPI::getHotelDataAsync($hotel_id_arr);
        
         foreach($asso_hotel as $hotel) {
@@ -29,10 +31,10 @@ class PollController extends Controller
             $hotel->vote = DB::table('votes')->where('hotel_id', '=', $hotel->id)->get();
 
         }
-
+          
          $poll->data = $asso_hotel;
-         return response($poll)
-                  ->header('Access-Control-Allow-Origin', '*');
+         
+         return response($poll)->header('Access-Control-Allow-Origin', '*');
     }
     
 
@@ -52,7 +54,7 @@ class PollController extends Controller
         $hotelReq = $request->input('hotels');
         foreach ($hotelReq as $key => $value) {
             $value['poll_id'] = $pollReq['id'];   
-            $value['id'] = sha1(time());         
+            $value['id'] = sha1(time()+$key);         
             $hotel = Hotel::Create($value);
         }
        
