@@ -26,4 +26,4 @@ $app->post('/poll',        'PollController@postPoll');
 $app->delete('/poll/{id}', 'PollController@deletePoll');
 
 // API for vote
-$app->post('/vote/{id}',   'VoteController@postVote');
+$app->post('/vote',   'VoteController@postVote');

@@ -5,6 +5,7 @@ class Vote extends Model {
     
     protected $fillable = [
         'reaction',
+        'note',
         'author',
     ];
     

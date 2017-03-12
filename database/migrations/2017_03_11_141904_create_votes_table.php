@@ -18,6 +18,7 @@ class CreateVotesTable extends Migration
             $table->integer('reaction');
             $table->integer('author');
             $table->string('hotel_id');
+            $table->text("note");
             $table->timestamps();
         });
     }
