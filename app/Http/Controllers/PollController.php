@@ -40,6 +40,11 @@ class PollController extends Controller
 
     public function postPoll(Request $request) 
     {        
+        if ($request->isMethod('OPTIONS'))
+        {
+            app()->options($request->path(), function() { return response('', 200); });
+     
+        }
         //create user
         $authorReq = $request->input('author');
         $user = User::firstOrCreate($authorReq[0]);
