@@ -5,8 +5,8 @@ class Hotel extends Model {
 
     protected $table = 'hotels';
 
-    protected $fillable = [
-        'id',
+    protected $fillable = [   
+        "id",     
         'booking_id',
         'checkIn',
         'checkOut',
