@@ -33,7 +33,7 @@ class BookingAPI
             }
         }
         catch( Exception $es) {
-            
+            Log::error($es);
         }
 
         return $hotel_id;
@@ -70,7 +70,7 @@ class BookingAPI
             $data = json_decode($result->getBody()->getContents());
         }
         catch( Exception $es) {
-            
+            Log::error($es);
         }
     
         return $data;
@@ -86,30 +86,30 @@ class BookingAPI
         $pool = (new EachPromise($promise, [
             'concurrency' => 5,
             'fulfilled' => function ($response) use (&$ret){      
+                // Get if array isset
+                // Dealing with false hotel_id (empty resp)
                 if(isset($response[0])){
                      $ret[$response[0]->hotel_id] = $response[0];
-                }      
-               
-                
+                }              
             }
-        ]))->promise()->wait();
+        ]))->promise()->wait(); 
     
         return $ret;
     }
 
+    // Promise function 
     private static function reqPromise($client, $hotel_id_arr){
         $url = 'https://distribution-xml.booking.com/json/bookings.getHotels?hotel_ids=';
+
         foreach ( $hotel_id_arr as $hotel_id ) {
-            Log::debug($hotel_id);
+
             $uu = $url . $hotel_id;        
-            Log::debug('hotel_id= '. $uu);
             yield $client->requestAsync('GET', $uu, [
                 'auth' => [
                     env('API_USERNAME'), 
                     env('API_PASSWORD')
                 ]
             ])->then(function(ResponseInterface $response) {
-                Log::debug('then');
                 return json_decode($response->getBody());
             });
         }
@@ -138,7 +138,7 @@ class BookingAPI
             $data = $result->getBody()->getContents();
         }
         catch( Exception $es ) {
-
+            Log::error($es);
         }
 
         return $data;

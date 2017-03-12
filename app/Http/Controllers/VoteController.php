@@ -8,11 +8,10 @@ use App\Vote;
 
 class VoteController extends Controller
 {
-    public function postVote(Request $request){
-
+    public function postVote(Request $request)
+    {
         $allReq = $request->all();
-        $user = User::Create(["name" => $allReq["name"]]);       
-        
+        $user = User::Create(["name" => $allReq["name"]]);
         
         $vote = Vote::Create([
             "name"    => $allReq["name"], 
@@ -21,11 +20,11 @@ class VoteController extends Controller
             "note"      => $allReq["note"]
         ]);
         
-        return response("vote created", 200);      
-        
+        return response("vote created", 200);
     }
-    public function getVoteByHotelId($id){
-        return response(DB::table('votes')->where('hotel_id', '=', $id)->get());
 
+    public function getVoteByHotelId($id)
+    {
+        return response(DB::table('votes')->where('hotel_id', '=', $id)->get());
     }
 }

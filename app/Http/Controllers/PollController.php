@@ -14,17 +14,17 @@ class PollController extends Controller
 {
     public function getPoll($id) 
     {
-
         $poll = Poll::where('id', $id)->with('author')->first();
 
+        // Get associated hotel 
         $asso_hotel =  DB::table('hotels')->where('poll_id', '=', $poll->id)->get();
        
         $hotel_id_arr = [];
         foreach($asso_hotel as $hotel) {           
             $hotel_id_arr[] = $hotel->booking_id;
         }
-      
-
+        
+        // Call booking API async
         $hotel_data = BookingAPI::getHotelDataAsync($hotel_id_arr);
        
         foreach($asso_hotel as $hotel) {
@@ -33,34 +33,33 @@ class PollController extends Controller
 
         }
           
-         $poll->data = $asso_hotel;
+        $poll->data = $asso_hotel;
          
-         return response($poll)->header('Access-Control-Allow-Origin', '*');
+        return response($poll)->header('Access-Control-Allow-Origin', '*');
     }
     
-
     public function postPoll(Request $request) 
     {        
         $json = $request->all();
         $request = json_decode($json['json'], true);
         
-        //create user
+        // create user
         $authorReq = $request["author"];
        
         $user = User::firstOrCreate($authorReq[0]);
         $pollReq = array();
-        //create poll
+        
+        // create poll
         $pollReq['title']       = $request["title"];
         $pollReq['startDate']   = $request["startDate"];
         $pollReq['endDate']     = $request["endDate"];
         $pollReq['personAmount']= $request["personAmount"];
-
-        
+ 
         $pollReq['id'] = sha1(time());
         $pollReq['author'] = $user->id;      
         $poll = Poll::Create($pollReq);
         
-        //create hotel
+        // create hotel
         $hotelReq = $request["hotels"];
        
         foreach ($hotelReq as $key => $value) {          
@@ -70,10 +69,5 @@ class PollController extends Controller
         }
        
         return response(array("poll id" => $pollReq['id']), 200)->header('Access-Control-Allow-Origin', '*');
-    }
-
-    public function deletePoll() 
-    {
-
     }
 }
